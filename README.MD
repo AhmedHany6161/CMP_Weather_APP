@@ -15,7 +15,7 @@ different cities.
 * **Air Quality:** View air quality details.
 * **Detailed Location Info:** Get more information about the selected location.
 * **Error Handling**
-* **Cross-Platform:** Built with Compose Multiplatform, it runs on both Android and iOS.
+* **Multiplatform-Platform:** Built with Compose Multiplatform, it runs on both Android and iOS.
 
 ## Creation
 
@@ -30,34 +30,27 @@ different cities.
 
 ### Note
 
-It's important to be aware that using a non-official library may involve risks in real projects.
+It's important to be aware that using a non-official tools like [Compose-Multiplatform-Wizard](https://terrakok.github.io/Compose-Multiplatform-Wizard/) may involve risks in real projects because it may be outdated or has security issue.
 However, since this is a test project for learning purposes, it's acceptable to use.
 
-## current app contains following feature
+## Current features
 
-- Get current user location in first launch of the app
+|        Get current user location in first launch of the app (when not has permission)        |                                (when already has permission)                                 |
+|:--------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------:|
+| <img src="Gifs/Screen_recording_20250421_153015.gif" width="400" height="800" alt="launch"/> | <img src="Gifs/Screen_recording_20250421_152910.gif" width="400" height="800" alt="launch"/> |
 
-<img src="Gifs/Screen_recording_20250421_153015.gif" width="400" height="800" alt="launch"/>
 
----
 
-<img src="Gifs/Screen_recording_20250421_152910.gif" width="400" height="800" alt="launch"/>
+|                        Search for weather by location or by city name                        |                                       Show Air quality                                       |
+|:--------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------:|
+| <img src="Gifs/Screen_recording_20250421_153128.gif" width="400" height="800" alt="launch"/> | <img src="Gifs/Screen_recording_20250421_153100.gif" width="400" height="800" alt="launch"/> |
 
-- Search for weather by location or by city name
 
-<img src="Gifs/Screen_recording_20250421_153128.gif" width="400" height="800" alt="launch"/>
 
-- Show Air quality
 
-<img src="Gifs/Screen_recording_20250421_153100.gif" width="400" height="800" alt="launch"/>
-
-- More details about location
-
-<img src="Gifs/Screen_recording_20250421_153039.gif" width="400" height="800" alt="launch"/>
-
-- Handle error
-
-<img src="Gifs/Screen_recording_20250421_152716.gif" width="400" height="800" alt="launch"/>
+|                                 More details about location                                  |                                         Handle error                                         |
+|:--------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------:|
+| <img src="Gifs/Screen_recording_20250421_153039.gif" width="400" height="800" alt="launch"/> | <img src="Gifs/Screen_recording_20250421_152716.gif" width="400" height="800" alt="launch"/> |
 
 ### Note
 
