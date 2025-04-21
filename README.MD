@@ -30,7 +30,7 @@ different cities.
 
 ### Note
 
-It's important to be aware that using a non-official tools like [Compose-Multiplatform-Wizard](https://terrakok.github.io/Compose-Multiplatform-Wizard/) may involve risks in real projects because it may be outdated or has security issue.
+It's important to be aware that using a non-official tools like [Compose-Multiplatform-Wizard](https://terrakok.github.io/Compose-Multiplatform-Wizard/) may involve risks in real projects because it may be outdated or has security issue but it assume for learning because it has a lot of libraries and plugins.
 However, since this is a test project for learning purposes, it's acceptable to use.
 
 ## Current features
