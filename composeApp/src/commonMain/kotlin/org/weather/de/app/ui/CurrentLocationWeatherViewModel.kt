@@ -14,7 +14,6 @@ import org.weather.de.app.dataLayer.weatherLocation.LocationServices
 import org.weather.de.app.dataLayer.weatherLocation.LocationServicesHandler
 import org.weather.de.app.dataLayer.offlineWeather.OfflineRepository
 import org.weather.de.app.dataLayer.offlineWeather.OfflineWeatherRepository
-import org.weather.de.app.dataLayer.onlineWeather.CurrentWeatherResponse
 import org.weather.de.app.dataLayer.onlineWeather.OnlineRepository
 import org.weather.de.app.dataLayer.onlineWeather.OnlineWeatherRepository
 import org.weather.de.app.dataLayer.weatherLocation.LocationData

@@ -4,11 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.viewModel
-import org.weather.de.app.dataLayer.onlineWeather.CurrentWeatherResponse
 
 @Composable
 internal fun CurrentWeatherScreen(
-    viewModel: CurrentLocationWeatherViewModel = viewModel(),
+    viewModel: CurrentLocationWeatherViewModel = viewModel { CurrentLocationWeatherViewModel() }
 ) {
     val currentWeatherState by viewModel.currentWeather.collectAsState()
 
