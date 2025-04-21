@@ -1,4 +1,4 @@
-package org.weather.de.app.ui
+package org.weather.de.app.ui.screens
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.RepeatMode
@@ -17,6 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import compose_weather_app.composeapp.generated.resources.*
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ErrorScreen(
@@ -51,7 +53,7 @@ fun ErrorScreen(
             // Animated error icon
             Icon(
                 imageVector = Icons.Filled.Warning,
-                contentDescription = "Error",
+                contentDescription = stringResource(Res.string.animated_error_icon_description),
                 tint = MaterialTheme.colorScheme.error,
                 modifier = Modifier
                     .size(80.dp)
@@ -62,7 +64,7 @@ fun ErrorScreen(
 
             // Error title with typography hierarchy
             Text(
-                text = "Oops!",
+                text = stringResource(Res.string.error_title),
                 style = MaterialTheme.typography.displaySmall,
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.padding(bottom = 8.dp)
@@ -96,11 +98,11 @@ fun ErrorScreen(
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Refresh,
-                        contentDescription = "Retry",
+                        contentDescription = stringResource(Res.string.error_retry_icon_description),
                         modifier = Modifier.size(20.dp)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Try Again", style = MaterialTheme.typography.labelLarge)
+                    Text(stringResource(Res.string.error_try_again_title), style = MaterialTheme.typography.labelLarge)
                 }
 
                 // Secondary action button
@@ -109,13 +111,13 @@ fun ErrorScreen(
                     shape = RoundedCornerShape(12.dp),
                     modifier = Modifier.height(50.dp)
                 ) {
-                    Text("Help", style = MaterialTheme.typography.labelLarge)
+                    Text(stringResource(Res.string.error_secondary_action_button_text), style = MaterialTheme.typography.labelLarge)
                 }
             }
 
             // Additional support information
             Text(
-                text = "Still having trouble? Contact support",
+                text = stringResource(Res.string.error_additional_support_information),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.outline,
                 modifier = Modifier

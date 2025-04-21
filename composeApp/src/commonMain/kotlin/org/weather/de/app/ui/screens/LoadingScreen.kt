@@ -1,4 +1,4 @@
-package org.weather.de.app.ui
+package org.weather.de.app.ui.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -13,6 +13,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import compose_weather_app.composeapp.generated.resources.*
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun LoadingScreen() {
@@ -23,7 +25,7 @@ fun LoadingScreen() {
         LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
         Spacer(modifier = Modifier.height(10.dp))
         Text(
-            text = "Loading",
+            text = stringResource(Res.string.loading_text),
             color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.bodyLarge

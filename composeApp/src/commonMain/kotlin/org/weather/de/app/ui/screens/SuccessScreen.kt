@@ -1,4 +1,4 @@
-package org.weather.de.app.ui
+package org.weather.de.app.ui.screens
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
@@ -12,27 +12,23 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.layout.ContentScale
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
-import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.TextButton
 import coil3.compose.LocalPlatformContext
 import coil3.request.crossfade
 import org.weather.de.app.dataLayer.onlineWeather.CurrentWeatherResponse
-import org.weather.de.app.dataLayer.onlineWeather.Location
 import compose_weather_app.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
+import org.weather.de.app.ui.components.AirQualityDetails
+import org.weather.de.app.ui.components.LocationInfoDialog
+import org.weather.de.app.ui.components.WeatherDetailRow
 
 @Composable
 fun SuccessScreen(response: CurrentWeatherResponse) {
     // State to control the visibility of the Air Quality details
-    var isAirQualityExpanded by rememberSaveable { mutableStateOf(false) }
     var showLocationInfoDialog by rememberSaveable { mutableStateOf(false) }
 
     Column(
@@ -146,79 +142,7 @@ fun SuccessScreen(response: CurrentWeatherResponse) {
                 color = MaterialTheme.colorScheme.onSurface
             )
         }
-
-        // Air Quality
-        HorizontalDivider(
-            modifier = Modifier.padding(vertical = 20.dp),
-            color = MaterialTheme.colorScheme.outlineVariant
-        )
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-
-            Text(
-                stringResource(Res.string.air_quality),
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colorScheme.onSurface
-            )
-            // Use an icon to expand/collapse the air quality details
-            IconButton(onClick = { isAirQualityExpanded = !isAirQualityExpanded }) {
-                Icon(
-                    imageVector = if (isAirQualityExpanded) Icons.Filled.ArrowForward else Icons.Outlined.Info,
-                    contentDescription = stringResource(Res.string.toggle_air_quality_details),
-                    tint = MaterialTheme.colorScheme.secondary
-                )
-            }
-        }
-
-        // Use AnimVisibility to control the expansion
-        if (isAirQualityExpanded) {
-            Column(horizontalAlignment = Alignment.Start, modifier = Modifier.fillMaxWidth()) {
-                WeatherDetailRow(
-                    label = stringResource(Res.string.co),
-                    value = response.current.airQuality.co.toString(),
-                    color = MaterialTheme.colorScheme.secondary
-                )
-                WeatherDetailRow(
-                    label = stringResource(Res.string.no2),
-                    value = response.current.airQuality.no2.toString(),
-                    color = MaterialTheme.colorScheme.secondary
-                )
-                WeatherDetailRow(
-                    label = stringResource(Res.string.o3),
-                    value = response.current.airQuality.o3.toString(),
-                    color = MaterialTheme.colorScheme.secondary
-                )
-                WeatherDetailRow(
-                    label = stringResource(Res.string.so2),
-                    value = response.current.airQuality.so2.toString(),
-                    color = MaterialTheme.colorScheme.secondary
-                )
-                WeatherDetailRow(
-                    label = stringResource(Res.string.pm25),
-                    value = response.current.airQuality.pm25.toString(),
-                    color = MaterialTheme.colorScheme.secondary
-                )
-                WeatherDetailRow(
-                    label = stringResource(Res.string.pm10),
-                    value = response.current.airQuality.pm10.toString(),
-                    color = MaterialTheme.colorScheme.secondary
-                )
-                WeatherDetailRow(
-                    label = stringResource(Res.string.us_epa_index),
-                    value = response.current.airQuality.usEpaIndex.toString(),
-                    color = MaterialTheme.colorScheme.secondary
-                )
-                WeatherDetailRow(
-                    label = stringResource(Res.string.gb_defra_index),
-                    value = response.current.airQuality.gbDefraIndex.toString(),
-                    color = MaterialTheme.colorScheme.secondary
-                )
-            }
-        }
+        AirQualityDetails(response)
     }
     // Show dialog on location icon click
     if (showLocationInfoDialog) {
@@ -227,69 +151,6 @@ fun SuccessScreen(response: CurrentWeatherResponse) {
             onDismiss = { showLocationInfoDialog = false }
         )
     }
-}
-
-@Composable
-fun WeatherDetailRow(label: String, value: String, color: Color) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Text(text = label, color = Color.Gray)
-        Text(text = value, fontWeight = FontWeight.Medium, color = color)
-    }
-}
-
-@Composable
-fun LocationInfoDialog(location: Location, onDismiss: () -> Unit) {
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = {
-            Text(
-                text = stringResource(Res.string.location_information),
-                style = MaterialTheme.typography.titleLarge
-            )
-        },
-        text = {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(
-                    text = "${stringResource(Res.string.name)}: ${location.name}",
-                    style = MaterialTheme.typography.bodyLarge
-                )
-                Text(
-                    text = "${stringResource(Res.string.region)}: ${location.region}",
-                    style = MaterialTheme.typography.bodyLarge
-                )
-                Text(
-                    text = "${stringResource(Res.string.country)}: ${location.country}",
-                    style = MaterialTheme.typography.bodyLarge
-                )
-                Text(
-                    text = "${stringResource(Res.string.latitude)}: ${location.lat}",
-                    style = MaterialTheme.typography.bodyLarge
-                )
-                Text(
-                    text = "${stringResource(Res.string.longitude)}: ${location.lon}",
-                    style = MaterialTheme.typography.bodyLarge
-                )
-                Text(
-                    text = "${stringResource(Res.string.timezone)}: ${location.tzId}",
-                    style = MaterialTheme.typography.bodyLarge
-                )
-                Text(
-                    text = "${stringResource(Res.string.local_time)}: ${location.localtime}",
-                    style = MaterialTheme.typography.bodyLarge
-                )
-            }
-        },
-        confirmButton = {
-            TextButton(onClick = onDismiss) {
-                Text(stringResource(Res.string.close))
-            }
-        }
-    )
 }
 
 

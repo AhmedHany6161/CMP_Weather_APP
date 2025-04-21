@@ -1,4 +1,4 @@
-package org.weather.de.app.ui
+package org.weather.de.app.ui.viewModal
 
 import org.weather.de.app.dataLayer.onlineWeather.CurrentWeatherResponse
 

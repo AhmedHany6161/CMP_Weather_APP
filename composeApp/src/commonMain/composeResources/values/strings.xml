@@ -26,4 +26,12 @@
     <string name="air_quality">Air Quality</string>
     <string name="toggle_air_quality_details">Toggle Air Quality Details</string>
     <string name="location">Location</string>
+    <string name="animated_error_icon_description">Error</string>
+    <string name="error_title">Oops!</string>
+    <string name="error_retry_icon_description">Retry</string>
+    <string name="error_try_again_title">Try Again</string>
+    <string name="error_secondary_action_button_text">Help</string>
+    <string name="error_additional_support_information">Still having trouble? Contact support</string>
+    <string name="loading_text">Loading</string>
+
 </resources>

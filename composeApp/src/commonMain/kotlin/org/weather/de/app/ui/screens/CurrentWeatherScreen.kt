@@ -1,4 +1,4 @@
-package org.weather.de.app.ui
+package org.weather.de.app.ui.screens
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.text.input.TextFieldState
@@ -35,6 +35,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import org.weather.de.app.ui.viewModal.CurrentLocationWeatherViewModel
+import org.weather.de.app.ui.viewModal.CurrentWeatherState
 
 @Composable
 internal fun CurrentWeatherScreen(

@@ -7,7 +7,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import org.weather.de.app.theme.AppTheme
-import org.weather.de.app.ui.CurrentWeatherScreen
+import org.weather.de.app.ui.screens.CurrentWeatherScreen
 
 @Composable
 internal fun App() = AppTheme {
