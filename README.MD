@@ -96,5 +96,5 @@ To run the application on iPhone device/simulator:
 ## Contact
 
 If you have any questions or need further assistance, feel free to reach
-out: [https://www.linkedin.com/in/amged-mohamed-72b4a6189/](https://www.linkedin.com/in/amged-mohamed-72b4a6189/)
+out: [https://www.linkedin.com/in/ahmed-hany-youssef/](https://www.linkedin.com/in/ahmed-hany-youssef/)
 
