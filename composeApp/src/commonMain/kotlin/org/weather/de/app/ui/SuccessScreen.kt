@@ -38,6 +38,7 @@ fun SuccessScreen(response: CurrentWeatherResponse) {
     Column(
         modifier = Modifier
             .padding(16.dp)
+            .padding(top = 64.dp)
             .fillMaxWidth().animateContentSize(
                 animationSpec = spring(
                     dampingRatio = Spring.DampingRatioMediumBouncy,

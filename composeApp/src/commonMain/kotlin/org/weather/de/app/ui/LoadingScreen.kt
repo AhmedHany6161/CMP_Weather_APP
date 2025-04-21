@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -16,7 +17,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun LoadingScreen() {
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.padding(top = 80.dp).fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         LinearProgressIndicator(modifier = Modifier.fillMaxWidth())

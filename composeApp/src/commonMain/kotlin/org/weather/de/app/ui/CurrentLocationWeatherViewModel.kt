@@ -6,7 +6,6 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -24,10 +23,17 @@ class CurrentLocationWeatherViewModel(
     private val locationServices: LocationServices = LocationServicesHandler,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
-    private var job: Job? = null
+
     private val _currentWeather: MutableStateFlow<CurrentWeatherState> = MutableStateFlow(
         CurrentWeatherState.Loading
     )
+    private val _selectedLocation: MutableStateFlow<LocationData?> = MutableStateFlow(null)
+
+    private val _searchResults: MutableStateFlow<List<LocationData>> = MutableStateFlow(
+        emptyList()
+    )
+
+    val searchResults: StateFlow<List<LocationData>> = _searchResults
 
     private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
         _currentWeather.value = CurrentWeatherState.Error(exception.message ?: "Unknown error")
@@ -36,18 +42,28 @@ class CurrentLocationWeatherViewModel(
     val currentWeather: StateFlow<CurrentWeatherState> = _currentWeather
 
     init {
-        job = viewModelScope.launch(dispatcher + exceptionHandler) {
-            _currentWeather.value = CurrentWeatherState.Loading
+        viewModelScope.launch(dispatcher + exceptionHandler) {
             val currentLocation = locationServices.getCurrentLocation()
-            val offlineCurrentWeather = offlineWeatherRepository.getCurrentWeather(currentLocation)
-            if (offlineCurrentWeather != null) {
-                _currentWeather.value = CurrentWeatherState.Success(offlineCurrentWeather)
+            _selectedLocation.value = currentLocation
+        }
+
+        viewModelScope.launch(dispatcher + exceptionHandler) {
+            _selectedLocation.collect { location ->
+                location?.let {
+                    println("Selected location: $it")
+                    _currentWeather.value = CurrentWeatherState.Loading
+                    val offlineCurrentWeather = offlineWeatherRepository.getCurrentWeather(it)
+                    offlineCurrentWeather?.let {
+                        _currentWeather.value = CurrentWeatherState.Success(offlineCurrentWeather)
+                    }
+                    fetchWeatherData(it)
+                }
             }
-            fetchCurrentWeatherData(currentLocation)
         }
     }
 
-    private suspend fun fetchCurrentWeatherData(currentLocation: LocationData) {
+
+    private suspend fun fetchWeatherData(currentLocation: LocationData) {
         val weatherData = onlineWeatherRepository.getWeatherData(currentLocation)
         weatherData?.let {
             _currentWeather.value = CurrentWeatherState.Success(it)
@@ -55,12 +71,26 @@ class CurrentLocationWeatherViewModel(
         }
     }
 
+    fun onSearchQueryChanged(query: String) {
+        viewModelScope.launch(dispatcher + exceptionHandler) {
+            val suggestions = locationServices.getSuggestionCompilation(query)
+            _searchResults.value = suggestions
+        }
+    }
+
+    fun onLocationSelected(location: LocationData) {
+        viewModelScope.launch(dispatcher + exceptionHandler) {
+            _selectedLocation.value = location
+        }
+    }
+
+
     fun refreshCurrentLocationWeather() {
-        job?.cancel()
-        job = viewModelScope.launch(dispatcher + exceptionHandler) {
+        viewModelScope.launch(dispatcher + exceptionHandler) {
             _currentWeather.value = CurrentWeatherState.Loading
-            val currentLocation = locationServices.getCurrentLocation()
-            fetchCurrentWeatherData(currentLocation)
+            _selectedLocation.value?.let {
+                fetchWeatherData(it)
+            }
         }
     }
 }

@@ -38,7 +38,7 @@ fun ErrorScreen(
     }
 
     Surface(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize().padding(top = 56.dp),
         color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.2f)
     ) {
         Column(
