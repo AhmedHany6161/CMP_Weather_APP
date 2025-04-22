@@ -1,17 +1,24 @@
 package org.weather.de.app.dataLayer.offlineWeather
 
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import org.weather.de.app.dataLayer.onlineWeather.CurrentWeatherResponse
 import org.weather.de.app.dataLayer.weatherLocation.LocationData
 
 
 object OfflineWeatherRepository : OfflineRepository {
-    private val cacheMap by lazy { mutableMapOf<String, CurrentWeatherResponse?>() }
+    private val cacheMap: MutableMap<String, CurrentWeatherResponse?> = mutableMapOf()
+    private val mutex = Mutex()
 
     override suspend fun saveWeatherData(data: CurrentWeatherResponse?) {
-        cacheMap["${data?.location?.lat}-${data?.location?.lon}"] = data
+        mutex.withLock {
+            cacheMap["${data?.location?.lat}-${data?.location?.lon}"] = data
+        }
     }
 
     override suspend fun getCurrentWeather(locationData: LocationData?): CurrentWeatherResponse? {
-        return cacheMap["${locationData?.latitude}-${locationData?.longitude}"]
+        return mutex.withLock {
+            cacheMap["${locationData?.latitude}-${locationData?.longitude}"]
+        }
     }
 }

@@ -30,7 +30,7 @@ different cities.
 
 ### Note
 
-It's important to be aware that using a non-official tools like [Compose-Multiplatform-Wizard](https://terrakok.github.io/Compose-Multiplatform-Wizard/) may involve risks in real projects because it may be outdated or has security issue but it assume for learning because it has a lot of libraries and plugins.
+It's important to be aware that using a non-official tools like [Compose-Multiplatform-Wizard](https://terrakok.github.io/Compose-Multiplatform-Wizard/) may involve risks in real projects because it may be outdated or has security issue but it awesome for learning because it has a lot of libraries and plugins.
 However, since this is a test project for learning purposes, it's acceptable to use.
 
 ## Current features
@@ -54,9 +54,9 @@ However, since this is a test project for learning purposes, it's acceptable to 
 
 ### Note
 
-The current app architecture consists of three layers: UI, data, and domain. This design was chosen
-because the project's business logic is relatively simple, involving only three screens and a single
-API call.
+- The current app architecture consists of three layers: UI, data, and domain. This design was chosen because the project's business logic is relatively simple, involving only three screens and a single API call. 
+
+- for caching just using memory cache because realm has problem which case current project to fail in build and other cache libraries has weak point because it still in beta for kotlin compose.
 
 # Compose Multiplatform Application configurations
 
