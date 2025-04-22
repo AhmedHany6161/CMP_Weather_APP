@@ -54,7 +54,7 @@ However, since this is a test project for learning purposes, it's acceptable to 
 
 ### Note
 
-- The current app architecture consists of three layers: UI, data, and domain. This design was chosen because the project's business logic is relatively simple, involving only three screens and a single API call. 
+- The current app architecture consists of three layers: UI, and data. This design was chosen because the project's business logic is relatively simple, involving only three screens and a single API call. 
 
 - for caching just using memory cache because realm has problem which case current project to fail in build and other cache libraries has weak point because it still in beta for kotlin compose.
 
