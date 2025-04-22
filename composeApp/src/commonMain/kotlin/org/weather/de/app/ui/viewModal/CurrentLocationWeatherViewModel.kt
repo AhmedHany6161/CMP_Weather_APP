@@ -50,7 +50,6 @@ class CurrentLocationWeatherViewModel(
         viewModelScope.launch(dispatcher + exceptionHandler) {
             _selectedLocation.collect { location ->
                 location?.let {
-                    println("Selected location: $it")
                     _currentWeather.value = CurrentWeatherState.Loading
                     val offlineCurrentWeather = offlineWeatherRepository.getCurrentWeather(it)
                     offlineCurrentWeather?.let {
