@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -60,7 +60,7 @@ fun AirQualityDetails(response: CurrentWeatherResponse) {
         // Use an icon to expand/collapse the air quality details
         IconButton(onClick = { isAirQualityExpanded = !isAirQualityExpanded }) {
             Icon(
-                imageVector = if (isAirQualityExpanded) Icons.Filled.ArrowForward else Icons.Outlined.Info,
+                imageVector = if (isAirQualityExpanded) Icons.AutoMirrored.Filled.ArrowForward else Icons.Outlined.Info,
                 contentDescription = stringResource(Res.string.toggle_air_quality_details),
                 tint = MaterialTheme.colorScheme.secondary
             )
