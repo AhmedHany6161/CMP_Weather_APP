@@ -8,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.weather.de.app.dataLayer.weatherLocation.LocationServices
 import org.weather.de.app.dataLayer.weatherLocation.LocationServicesHandler
@@ -27,19 +28,20 @@ class CurrentLocationWeatherViewModel(
     private val _currentWeather: MutableStateFlow<CurrentWeatherState> = MutableStateFlow(
         CurrentWeatherState.Loading
     )
+
     private val _selectedLocation: MutableStateFlow<LocationData?> = MutableStateFlow(null)
 
     private val _searchResults: MutableStateFlow<List<LocationData>> = MutableStateFlow(
         emptyList()
     )
 
-    val searchResults: StateFlow<List<LocationData>> = _searchResults
-
     private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
         _currentWeather.value = CurrentWeatherState.Error(exception.message ?: "Unknown error")
     }
 
-    val currentWeather: StateFlow<CurrentWeatherState> = _currentWeather
+    val searchResults = _searchResults.asStateFlow()
+
+    val currentWeather = _currentWeather.asStateFlow()
 
     init {
         viewModelScope.launch(dispatcher + exceptionHandler) {
