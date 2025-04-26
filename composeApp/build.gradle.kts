@@ -122,5 +122,6 @@ android {
 //https://developer.android.com/develop/ui/compose/testing#setup
 dependencies {
     androidTestImplementation(libs.androidx.uitest.junit4)
+    testImplementation(libs.mockk)
     debugImplementation(libs.androidx.uitest.testManifest)
 }
