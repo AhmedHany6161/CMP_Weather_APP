@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather APP - Compose Multiplatform</title>
+    <style>
+        :root {
+              --primary-color: #2196F3;
+              --secondary-color: #607D8B;
+              --background-color: #f5f5f5;
+              --primary: #2c3e50;
+              --secondary: #3498db;
+              --background: #f8f9fa;
+              --text: #2c3e50;
+          }
+
+          body {
+              font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+              line-height: 1.6;
+              max-width: 1200px;
+              margin: 0 auto;
+              padding: 20px;
+              background-color: var(--background-color);
+              color: var(--text);
+          }
+
+          .nav-container {
+              position: fixed;
+              top: 0;
+              left: 0;
+              right: 0;
+              background: white;
+              box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+              z-index: 1000;
+          }
+
+          .nav-links {
+              display: flex;
+              justify-content: center;
+              gap: 2rem;
+              padding: 1rem;
+          }
+
+          .nav-links a {
+              color: var(--primary-color);
+              font-weight: 500;
+              padding: 0.5rem 1rem;
+              border-radius: 8px;
+              transition: all 0.2s;
+          }
+
+          .nav-links a:hover {
+              background-color: rgba(33, 150, 243, 0.1);
+              text-decoration: none;
+          }
+
+          h2 {
+              color: var(--primary-color);
+              border-bottom: 2px solid var(--primary-color);
+              padding-bottom: 0.5rem;
+              margin-top: 2rem;
+          }
+
+          .code-tree {
+              background: #ffffff;
+              border-radius: 12px;
+              padding: 2rem;
+              box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+              overflow-x: auto;
+          }
+
+          .tree-item {
+              display: flex;
+              align-items: center;
+              padding: 4px 0;
+              margin-left: 20px;
+          }
+
+          .tree-icon {
+              width: 24px;
+              text-align: center;
+              margin-right: 8px;
+          }
+
+          .tree-name {
+              font-family: 'JetBrains Mono', monospace;
+              font-size: 0.95em;
+          }
+
+          .directory {
+              color: var(--secondary);
+              font-weight: 500;
+          }
+
+          .file {
+              color: var(--text);
+          }
+
+          .file-kt {
+              color: #27ae60;
+          }
+
+          .annotation {
+              margin-left: 12px;
+              font-size: 0.9em;
+              color: #7f8c8d;
+              font-style: italic;
+          }
+
+          .nested {
+              margin-left: 40px;
+          }
+
+          header {
+              text-align: center;
+              padding: 2rem;
+              background: linear-gradient(135deg, var(--primary-color), #1976D2);
+              color: white;
+              border-radius: 12px;
+              margin-bottom: 2rem;
+          }
+
+          .nav-container {
+              position: fixed;
+              top: 0;
+              left: 0;
+              right: 0;
+              background: white;
+              box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+              z-index: 1000;
+          }
+
+          .nav-links {
+              display: flex;
+              justify-content: center;
+              gap: 2rem;
+              padding: 1rem;
+          }
+
+          .nav-links a {
+              color: var(--primary-color);
+              font-weight: 500;
+              padding: 0.5rem 1rem;
+              border-radius: 8px;
+              transition: all 0.2s;
+          }
+
+          .nav-links a:hover {
+              background-color: rgba(33, 150, 243, 0.1);
+              text-decoration: none;
+          }
+
+          h2 {
+              color: var(--primary-color);
+              border-bottom: 2px solid var(--primary-color);
+              padding-bottom: 0.5rem;
+              margin-top: 2rem;
+          }
+
+          .feature-grid {
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+              gap: 2rem;
+              margin: 2rem 0;
+          }
+
+          .feature-card {
+              background: white;
+              padding: 1.5rem;
+              border-radius: 12px;
+              box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+          }
+
+          .tech-stack {
+              display: flex;
+              flex-wrap: wrap;
+              gap: 1rem;
+              margin: 1rem 0;
+          }
+
+          .tech-item {
+              background: #e3f2fd;
+              padding: 0.5rem 1rem;
+              border-radius: 20px;
+              font-size: 0.9em;
+          }
+
+          .tech-item-header {
+              background: #155c9e;
+              padding: 0.5rem 1rem;
+              border-radius: 20px;
+              font-size: 0.9em;
+          }
+
+          .code-block {
+              background: #263238;
+              color: #ffffff;
+              padding: 1rem;
+              border-radius: 8px;
+              font-family: 'JetBrains Mono', monospace;
+              overflow-x: auto;
+          }
+
+          .gallery-container {
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+              gap: 1.5rem;
+              padding: 1rem;
+          }
+
+          .gallery-item {
+              position: relative;
+              border-radius: 12px;
+              overflow: hidden;
+              box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+              transition: transform 0.3s ease;
+              background: white;
+              aspect-ratio: 9/16;
+          }
+
+          .gallery-item:hover {
+              transform: translateY(-5px);
+              box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+          }
+
+          .gallery-item img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              display: block;
+              border-bottom: 1px solid #eee;
+          }
+
+          .caption {
+              padding: 1rem;
+              text-align: center;
+              background: white;
+              margin: 0;
+              font-weight: 500;
+              color: var(--secondary-color);
+          }
+
+          footer {
+              text-align: center;
+              padding: 2rem;
+              margin-top: 3rem;
+              border-top: 1px solid #ddd;
+          }
+
+          .accordion {
+              margin: 1rem 0;
+          }
+
+          .accordion-header {
+              background: white;
+              padding: 1rem;
+              border-radius: 8px;
+              cursor: pointer;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+          }
+
+          .accordion-content {
+              padding: 1rem;
+              background: white;
+              border-radius: 0 0 8px 8px;
+              display: none;
+          }
+
+          @media (max-width: 768px) {
+              .nav-links {
+                  flex-direction: column;
+                  text-align: center;
+                  gap: 0.5rem;
+              }
+
+              .feature-grid {
+                  grid-template-columns: 1fr;
+              }
+
+              .gallery-container {
+                  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+              }
+
+              .gallery-item {
+                  aspect-ratio: 9/16;
+              }
+          }
+
+          @media (max-width: 480px) {
+              .gallery-container {
+                  grid-template-columns: 1fr;
+              }
+
+              .gallery-item {
+                  aspect-ratio: 9/16;
+                  max-width: 300px;
+                  margin: 0 auto;
+              }
+          }
+    </style>
+</head>
+<body>
+<nav class="nav-container">
+    <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#tech">Tech Stack</a>
+        <a href="#setup">Setup</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#contribute">Contribute</a>
+    </div>
+</nav>
+
+<header>
+    <h1>Weather App - Compose Multiplatform</h1>
+    <p>Cross-platform weather application for Android & iOS</p>
+    <div class="tech-stack" style="justify-content: center; margin-top: 1rem;">
+        <span class="tech-item-header">Kotlin Multiplatform</span>
+        <span class="tech-item-header">Jetpack Compose</span>
+        <span class="tech-item-header">MVVM Architecture</span>
+    </div>
+</header>
+
+<section id="features">
+    <h2>✨ Key Features</h2>
+    <div class="feature-grid">
+        <div class="feature-card">
+            <h3>🌍 Location-Based Weather</h3>
+            <p>Automatic detection of current location with GPS permissions handling</p>
+        </div>
+        <div class="feature-card">
+            <h3>🔍 City Search</h3>
+            <p>Search for weather information in any city worldwide</p>
+        </div>
+        <div class="feature-card">
+            <h3>🌬️ Air Quality Index</h3>
+            <p>Detailed PM2.5 and air quality monitoring with color-coded indicators</p>
+        </div>
+        <div class="feature-card">
+            <h3>📊 Weather Details</h3>
+            <p>Hourly forecasts, humidity, wind speed, and UV index</p>
+        </div>
+    </div>
+</section>
+
+<section id="tech">
+    <h2>📁 Project Structure</h2>
+    <div class="code-tree">
+        <div class="tree-item directory">
+            <span class="tree-icon">📁</span>
+            <span class="tree-name">org.weather.de.app</span>
+        </div>
+
+        <div class="nested">
+            <!-- Data Layer -->
+            <div class="tree-item directory">
+                <span class="tree-icon">📁</span>
+                <span class="tree-name">dataLayer</span>
+                <span class="annotation"># Data management layer</span>
+            </div>
+            <div class="nested">
+                <div class="tree-item directory">
+                    <span class="tree-icon">📁</span>
+                    <span class="tree-name">offlineWeather</span>
+                </div>
+                <div class="nested">
+                    <div class="tree-item file">
+                        <span class="tree-icon">📄</span>
+                        <span class="tree-name file-kt">OfflineWeatherRepository.kt</span>
+                    </div>
+                </div>
+
+                <div class="tree-item directory">
+                    <span class="tree-icon">📁</span>
+                    <span class="tree-name">onlineWeather</span>
+                </div>
+                <div class="nested">
+                    <div class="tree-item file">
+                        <span class="tree-icon">📄</span>
+                        <span class="tree-name file-kt">KtorFitClient.kt</span>
+                    </div>
+                    <div class="tree-item file">
+                        <span class="tree-icon">📄</span>
+                        <span class="tree-name file-kt">OneCallOnlineResponse.kt</span>
+                    </div>
+                    <div class="tree-item file">
+                        <span class="tree-icon">📄</span>
+                        <span class="tree-name file-kt">OnlineWeatherRepository.kt</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Theme -->
+            <div class="tree-item directory">
+                <span class="tree-icon">📁</span>
+                <span class="tree-name">theme</span>
+            </div>
+            <div class="nested">
+                <div class="tree-item file">
+                    <span class="tree-icon">📄</span>
+                    <span class="tree-name file-kt">Color.kt</span>
+                </div>
+                <div class="tree-item file">
+                    <span class="tree-icon">📄</span>
+                    <span class="tree-name file-kt">Theme.kt</span>
+                </div>
+            </div>
+
+            <!-- UI -->
+            <div class="tree-item directory">
+                <span class="tree-icon">📁</span>
+                <span class="tree-name">ui</span>
+            </div>
+            <div class="nested">
+                <div class="tree-item directory">
+                    <span class="tree-icon">📁</span>
+                    <span class="tree-name">components</span>
+                </div>
+                <div class="nested">
+                    <div class="tree-item file">
+                        <span class="tree-icon">📄</span>
+                        <span class="tree-name file-kt">AirQualityDetails.kt</span>
+                    </div>
+                    <div class="tree-item file">
+                        <span class="tree-icon">📄</span>
+                        <span class="tree-name file-kt">LocationInfoDialog.kt</span>
+                    </div>
+                    <div class="tree-item file">
+                        <span class="tree-icon">📄</span>
+                        <span class="tree-name file-kt">WeatherDetailRow.kt</span>
+                    </div>
+                </div>
+
+                <div class="tree-item directory">
+                    <span class="tree-icon">📁</span>
+                    <span class="tree-name">screens</span>
+                </div>
+                <div class="nested">
+                    <div class="tree-item file">
+                        <span class="tree-icon">📄</span>
+                        <span class="tree-name file-kt">CurrentWeatherScreen.kt</span>
+                    </div>
+                    <div class="tree-item file">
+                        <span class="tree-icon">📄</span>
+                        <span class="tree-name file-kt">ErrorScreen.kt</span>
+                    </div>
+                    <div class="tree-item file">
+                        <span class="tree-icon">📄</span>
+                        <span class="tree-name file-kt">LoadingScreen.kt</span>
+                    </div>
+                    <div class="tree-item file">
+                        <span class="tree-icon">📄</span>
+                        <span class="tree-name file-kt">SuccessScreen.kt</span>
+                    </div>
+                </div>
+
+                <div class="tree-item directory">
+                    <span class="tree-icon">📁</span>
+                    <span class="tree-name">viewmodel</span>
+                </div>
+                <div class="nested">
+                    <div class="tree-item file">
+                        <span class="tree-icon">📄</span>
+                        <span class="tree-name file-kt">CurrentLocationWeatherViewModel.kt</span>
+                    </div>
+                    <div class="tree-item file">
+                        <span class="tree-icon">📄</span>
+                        <span class="tree-name file-kt">CurrentWeatherState.kt</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Weather Location -->
+            <div class="tree-item directory">
+                <span class="tree-icon">📁</span>
+                <span class="tree-name">weatherLocation</span>
+            </div>
+            <div class="nested">
+                <div class="tree-item file">
+                    <span class="tree-icon">📄</span>
+                    <span class="tree-name file-kt">LocationData.kt</span>
+                </div>
+                <div class="tree-item file">
+                    <span class="tree-icon">📄</span>
+                    <span class="tree-name file-kt">LocationServices.kt</span>
+                </div>
+                <div class="tree-item file">
+                    <span class="tree-icon">📄</span>
+                    <span class="tree-name file-kt">LocationServicesHandler.kt</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="setup">
+    <h2>⚙️ Setup & Installation</h2>
+
+    <div class="accordion">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+            <h3>Android Setup</h3>
+            <span>▼</span>
+        </div>
+        <div class="accordion-content">
+            <ol>
+                <li>Clone the repository</li>
+                <li>Open in Android Studio Electric Eel or newer</li>
+                <li>Add <code>local.properties</code> with Android SDK path</li>
+                <li>Build and run with Gradle:
+                    <div class="code-block">
+                        ./gradlew :composeApp:assembleDebug
+                    </div>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="accordion">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+            <h3>iOS Setup</h3>
+            <span>▼</span>
+        </div>
+        <div class="accordion-content">
+            <ol>
+                <li>Install Xcode 15+</li>
+                <li>Open <code>iosApp/iosApp.xcodeproj</code></li>
+                <li>Configure signing team in Xcode</li>
+                <li>Build and run on simulator/device</li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<section id="gallery">
+    <h2>📱 App Gallery</h2>
+    <div class="gallery-container">
+        <div class="gallery-item">
+            <img src="Gifs/Screen_recording_20250421_153015.gif"
+                 alt="Location permission flow"
+                 loading="lazy">
+            <p class="caption">Location Permission Flow</p>
+        </div>
+        <div class="gallery-item">
+            <img src="Gifs/Screen_recording_20250421_152910.gif"
+                 alt="Current weather"
+                 loading="lazy">
+            <p class="caption">Current Weather Display</p>
+        </div>
+        <div class="gallery-item">
+            <img src="Gifs/Screen_recording_20250421_153128.gif"
+                 alt="City search"
+                 loading="lazy">
+            <p class="caption">City Search Feature</p>
+        </div>
+        <div class="gallery-item">
+            <img src="Gifs/Screen_recording_20250421_153100.gif"
+                 alt="Air quality"
+                 loading="lazy">
+            <p class="caption">Air Quality Monitoring</p>
+        </div>
+        <div class="gallery-item">
+            <img src="Gifs/Screen_recording_20250421_153039.gif"
+                 alt="Weather details"
+                 loading="lazy">
+            <p class="caption">Detailed Weather Information</p>
+        </div>
+        <div class="gallery-item">
+            <img src="Gifs/Screen_recording_20250421_152716.gif"
+                 alt="Error handling"
+                 loading="lazy">
+            <p class="caption">Error Handling Scenario</p>
+        </div>
+    </div>
+</section>
+
+<section id="contribute">
+    <h2>🤝 How to Contribute</h2>
+    <div class="feature-card">
+        <h3>🚧 Current Limitations</h3>
+        <ul>
+            <li>Basic memory caching implementation</li>
+            <li>Limited error handling scenarios</li>
+            <li>No offline support</li>
+        </ul>
+    </div>
+
+    <div class="feature-card" style="margin-top: 1rem;">
+        <h3>🔮 Future Roadmap</h3>
+        <ul>
+            <li>Implement persistent caching with SQLDelight</li>
+            <li>Add weather map visualization</li>
+            <li>Push notifications for severe weather</li>
+            <li>Multi-language support</li>
+        </ul>
+    </div>
+
+    <div style="margin-top: 2rem;">
+        <h3>📝 Contribution Guidelines</h3>
+        <ol>
+            <li>Fork the repository</li>
+            <li>Create feature branch (<code>git checkout -b feature/AmazingFeature</code>)</li>
+            <li>Commit changes (<code>git commit -m 'Add some AmazingFeature'</code>)</li>
+            <li>Push to branch (<code>git push origin feature/AmazingFeature</code>)</li>
+            <li>Open a Pull Request</li>
+        </ol>
+    </div>
+</section>
+
+<footer>
+    <p>📧 Contact: <a href="https://www.linkedin.com/in/ahmed-hany-youssef/">LinkedIn Profile</a></p>
+    <p>📂 Repository: <a href="https://github.com/AhmedHany6161/CMP_Weather_APP">GitHub Project</a>
+    </p>
+    <p>© 2024 Weather App. MIT License</p>
+</footer>
+
+<script>
+    function toggleAccordion(header) {
+        const content = header.nextElementSibling;
+        const isOpen = content.style.display === 'block';
+
+        document.querySelectorAll('.accordion-content').forEach(el => {
+            el.style.display = 'none';
+            el.previousElementSibling.querySelector('span').textContent = '▼';
+        });
+
+        if (!isOpen) {
+            content.style.display = 'block';
+            header.querySelector('span').textContent = '▲';
+        }
+    }
+
+    // Smooth scroll for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>
