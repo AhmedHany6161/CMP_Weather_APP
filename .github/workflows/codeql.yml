@@ -27,7 +27,7 @@ jobs:
     #   - https://gh.io/supported-runners-and-hardware-resources
     #   - https://gh.io/using-larger-runners (GitHub.com only)
     # Consider using larger runners or machines with greater resources for possible analysis time improvements.
-    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
+    runs-on: ${{ 'ubuntu-latest' }}
     permissions:
       # required for all workflows
       security-events: write
@@ -43,10 +43,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-        - language: java-kotlin
+        - language: kotlin
           build-mode: manual # Changed from autobuild to manual
-        - language: swift
-          build-mode: autobuild
+          
         # CodeQL supports the following values keywords for 'language': 'actions', 'c-cpp', 'csharp', 'go', 'java-kotlin', 'javascript-typescript', 'python', 'ruby', 'swift'
         # Use `c-cpp` to analyze code written in C, C++ or both
         # Use 'java-kotlin' to analyze code written in Java, Kotlin or both
@@ -88,13 +87,7 @@ jobs:
       if: matrix.build-mode == 'manual' # Execute only for manual build mode
       shell: bash
       run: |
-        # Replace './gradlew assemble' with the command that builds your Java/Kotlin project.
-        # Common commands include:
-        #   ./gradlew build
-        #   ./gradlew assembleDebug
-        # You may need to adjust the path to the gradlew executable or use 'gradlew' directly
-        # depending on your repository structure and how Gradle is set up.
-        ./gradlew assemble # Example command for a Gradle project.
+        ./gradlew assemble
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
