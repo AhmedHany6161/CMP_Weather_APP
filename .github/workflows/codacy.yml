@@ -37,7 +37,19 @@ jobs:
       # Checkout the repository to the GitHub Actions runner
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: Configure Git
+        run: |
+              git config --global user.name "GitHub Actions"
+              git config --global user.email "actions@github.com"
 
+      - name: Debug `.git` Contents
+        run: |
+              ls -la ${{ github.workspace }}/src/commonMain/kotlin/org/weather/de/app/.git
+              cat ${{ github.workspace }}/src/commonMain/kotlin/org/weather/de/app/.git/config
+    
       # Execute Codacy Analysis CLI and generate a SARIF output with the security issues identified during the analysis
       - name: Run Codacy Analysis CLI
         uses: codacy/codacy-analysis-cli-action@d840f886c4bd4edc059706d09c6a1586111c540b
