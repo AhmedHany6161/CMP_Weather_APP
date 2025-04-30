@@ -47,8 +47,8 @@ jobs:
 
       - name: Debug `.git` Contents
         run: |
-              ls -la ${{ github.workspace }}/src/commonMain/kotlin/org/weather/de/app/.git
-              cat ${{ github.workspace }}/src/commonMain/kotlin/org/weather/de/app/.git/config
+              ls -la ${{ github.workspace }}/.git
+              cat ${{ github.workspace }}/.git/config
     
       # Execute Codacy Analysis CLI and generate a SARIF output with the security issues identified during the analysis
       - name: Run Codacy Analysis CLI
