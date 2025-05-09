@@ -34,7 +34,7 @@ object OnlineWeatherRepository : OnlineRepository {
     /**
      * Retrieves current weather data for a given location.
      *
-     * This function uses the [WeatherApiClient] to fetch weather information from a remote API.
+     * This function uses the [KtorFitClient] to fetch weather information from a remote API.
      * It constructs the API request using the provided latitude and longitude from the
      * [LocationData] object.
      *
